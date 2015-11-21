@@ -1,17 +1,18 @@
-<html>
-  <head>
-    <title>Shopping List</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Shopping List{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
     <h1>Shopping List</h1>
+    <p>The local data and time is {{ moment(current_time).format('LLL') }}. </p>
+    <p>That was {{ moment(current_time).fromNow(refresh=True) }} </p>
     <ul>
       {% for item in items %}
         <li> {{ item }} <a href='{{ url_for('remove_item', name=item) }}'>[Remove]</a></li>
       {% endfor %}
     </ul>
-    <form method="POST">
-      <input type="text" name = "item">
-      <input type="submit" value="Add to List">
-    </form>
-  </body>
-</html>
+</div>
+{{ wtf.quick_form(form) }}
+{% endblock %}
